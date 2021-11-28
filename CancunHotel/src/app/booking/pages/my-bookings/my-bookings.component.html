@@ -18,18 +18,18 @@
     <div class="form-group" *ngIf="updateMode">
         <div class="col-sm-3 form-group">
             <label >Check-In:</label>
-            <input type="date" class="form-control" formControlName="checkIn" 
-            [ngClass]="{ 'is-invalid': updateBooking.controls.checkIn.errors }">
-            <div *ngIf="updateBooking.controls.checkIn.errors" class="invalid-feedback">
+            <input #inpDate1 type="date" class="form-control" formControlName="checkIn" 
+            [ngClass]="{ 'is-invalid': updateBooking.controls.checkIn.errors && typeAlert == 'danger' }">
+            <div *ngIf="updateBooking.controls.checkIn.errors && typeAlert == 'danger' " class="invalid-feedback">
                 Date for check-in is required!
             </div>                
         </div>
 
         <div class="col-sm-3 form-group">
             <label >Check-out:</label>
-            <input type="date" class="form-control" formControlName="checkOut" 
-            [ngClass]="{ 'is-invalid': updateBooking.controls.checkOut.errors }">
-            <div *ngIf="updateBooking.controls.checkOut.errors" class="invalid-feedback">
+            <input #inpDate2 type="date" class="form-control" formControlName="checkOut" 
+            [ngClass]="{ 'is-invalid': updateBooking.controls.checkOut.errors && typeAlert == 'danger' }">
+            <div *ngIf="updateBooking.controls.checkOut.errors && typeAlert == 'danger' " class="invalid-feedback">
                 Date for check-out is required!
             </div>
         </div>
@@ -59,7 +59,7 @@
             <tr *ngFor="let item of myBookingList" >
                 <td data-title="roomName">{{ item.roomName }}</td>
                 <td data-title="checkIn">{{ item.checkIn| date:"dd/MM/yyyy" }}</td>
-                <td data-title="checkOut">{{ item.checkIn| date:"dd/MM/yyyy"}}</td>
+                <td data-title="checkOut">{{ item.checkOut| date:"dd/MM/yyyy"}}</td>
                 <td data-title="cancelled">{{ item.cancelled ? "Yes" : "No"}}</td>
                 <td>
                     <button type="button" class="btn btn-warning" (click)="editMode(item)" [disabled]="item.cancelled ">Edit</button>

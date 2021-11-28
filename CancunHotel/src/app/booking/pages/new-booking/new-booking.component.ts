@@ -50,6 +50,12 @@ export class NewBookingComponent implements OnInit {
     this.showAlert = false;
     this.message = '';
 
+    if (!this.newBooking.valid){
+      this.typeAlert = "danger";
+      this.loading = false;
+      return;
+    }
+
     this.bookingService.Create(booking).subscribe(data => {
 
       this.newBooking.get("roomId").setValue("");

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Token } from 'src/app/Shared/helpers/token';
 import { IAuth } from 'src/app/Shared/interfaces/IAuth';
 import { CustomerService } from 'src/app/Shared/services/customer.service';
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
   loading  : boolean = false;
 
   constructor(private formBuilder: FormBuilder,
-              private serviceCustomer : CustomerService) { }
+              private serviceCustomer : CustomerService,
+              private router : Router) { }
 
   ngOnInit(): void {
     this.loginAccount = this.formBuilder.group({
@@ -40,6 +42,12 @@ export class LoginComponent implements OnInit {
     this.showAlert = false;
     this.message = '';
 
+    if (!this.loginAccount.valid){
+      this.typeAlert = "danger";
+      this.loading = false;
+      return;
+    }
+
     this.serviceCustomer.Authentication(auth).subscribe(data => {
 
       this.loginAccount.get("eMail").setValue("");
@@ -51,6 +59,7 @@ export class LoginComponent implements OnInit {
       this.showAlert = true;
       this.message = "Authenticated";
       this.loading = false;
+      this.router.navigate(['/new-booking']).then();
 
     }, exception => {
       this.typeAlert = "danger";

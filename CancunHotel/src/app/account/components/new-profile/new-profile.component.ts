@@ -44,6 +44,12 @@ export class NewProfileComponent implements OnInit {
     this.showAlert = false;
     this.message = '';
 
+    if (!this.newAccount.valid){
+      this.typeAlert = "danger";
+      this.loading = false;
+      return;
+    }
+
     this.serviceCustomer.Create(profile).subscribe(data => {
 
       this.newAccount.get("firstName").setValue("");

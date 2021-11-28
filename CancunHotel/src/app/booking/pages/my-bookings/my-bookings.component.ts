@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IBooking } from 'src/app/Shared/interfaces/IBooking';
 import { IUpdateBooking } from 'src/app/Shared/interfaces/IUpdateBooking';
@@ -36,9 +36,11 @@ export class MyBookingsComponent implements OnInit {
   editMode(item : IBooking){
 
     this.updateMode = true;
-    this.updateBooking.get("id").setValue(item.id);
-    this.updateBooking.get("checkIn").setValue(item.checkIn);
-    this.updateBooking.get("checkOut").setValue(item.checkOut);
+    this.updateBooking.setValue({
+      id : item.id,
+      checkIn : item.checkIn,
+      checkOut : item.checkOut
+    });
 
   }
 
@@ -54,6 +56,12 @@ export class MyBookingsComponent implements OnInit {
     this.loading = true;
     this.showAlert = false;
     this.message = '';
+
+    if (!this.updateBooking.valid){
+      this.typeAlert = "danger";
+      this.loading = false;
+      return;
+    }
 
     this.bookingService.Update(booking).subscribe(data => {
 
