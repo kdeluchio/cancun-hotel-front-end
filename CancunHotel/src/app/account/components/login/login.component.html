@@ -1,0 +1,41 @@
+<form [formGroup]="loginAccount" >
+    <h4>Authenticate</h4> 
+
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="message != '' && typeAlert == 'danger' " >
+        {{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="closeMsg()"> 
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="message != '' && typeAlert == 'success' " >
+        {{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="closeMsg()"> 
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+ 
+    <div class="form-group">
+        <label >E-Mail:</label>
+        <input type="email" class="form-control" formControlName="eMail" 
+        [ngClass]="{ 'is-invalid': loginAccount.controls.eMail.errors }">
+        <div *ngIf="loginAccount.controls.eMail.errors" class="invalid-feedback">
+            E-Mail is required!
+        </div>                
+    </div> 
+    <div class="form-group">
+        <label >Password:</label>
+        <input type="password" class="form-control" formControlName="password" 
+        [ngClass]="{ 'is-invalid': loginAccount.controls.password.errors }">
+        <div *ngIf="loginAccount.controls.password.errors" class="invalid-feedback">
+            Password is required!
+        </div>                
+    </div> 
+ 
+    <div class="form-group">
+        <button type="submit" [disabled]="loading" class="btn btn-success" (click)="entry()">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Login
+        </button>
+    </div>
+</form>

@@ -1,0 +1,53 @@
+<form [formGroup]="newBooking" >
+    <h4>Make your reservation now!</h4> 
+
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="message != '' && typeAlert == 'danger' " >
+        {{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="closeMsg()"> 
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="message != '' && typeAlert == 'success' " >
+        {{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="closeMsg()"> 
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="form-group">
+        <label>Select Your Room:</label>
+        <select class="form-control" formControlName="roomId"
+            [ngClass]="{ 'is-invalid': newBooking.controls.roomId.errors }">   
+            <div *ngIf="newBooking.controls.roomId.errors" class="invalid-feedback">
+                Room is required!
+            </div>              
+            <option *ngFor="let room of rooms" value="{{room.id}}">Room Number: {{room.number}} | {{room.description}}</option> 
+        </select>      
+    </div>
+
+    <div class="form-group">
+        <label >Check-In:</label>
+        <input type="date" class="form-control" formControlName="checkIn" 
+        [ngClass]="{ 'is-invalid': newBooking.controls.checkIn.errors }">
+        <div *ngIf="newBooking.controls.checkIn.errors" class="invalid-feedback">
+            Date for check-in is required!
+        </div>                
+    </div> 
+
+    <div class="form-group">
+        <label >Check-out:</label>
+        <input type="date" class="form-control" formControlName="checkOut" 
+        [ngClass]="{ 'is-invalid': newBooking.controls.checkOut.errors }">
+        <div *ngIf="newBooking.controls.checkOut.errors" class="invalid-feedback">
+            Date for check-out is required!
+        </div>                
+    </div> 
+
+    <div class="form-group">
+        <button type="submit" [disabled]="loading" class="btn btn-success" (click)="booking()">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Booking
+        </button>
+    </div>
+</form>
